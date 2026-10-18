@@ -1,8 +1,10 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Header } from './header/header';
+import { Dashboard } from './dashboard/dashboard';
+import { Transaction } from './transaction/transaction';
 
 @Component({
-  imports: [RouterOutlet],
+  imports: [Header, Dashboard, Transaction],
   selector: 'app-root',
   styleUrl: './app.scss',
   templateUrl: './app.html',
