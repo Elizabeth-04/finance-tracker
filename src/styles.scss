@@ -1,5 +1,63 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+:root {
+  --green: #15966a;
+  --dark: #087b55;
+  --soft: #e8f7f0;
+  --ink: #182b43;
+  --muted: #7b8ca6;
+  --line: #e7edf3;
+  --bg: #f5f8fb;
+  --red: #f45e69;
+  --blue: #48a8f5;
+  --purple: #9661ed;
+  --orange: #ffad42;
+  --teal: #39aeb3;
+}
+* {
+  box-sizing: border-box;
+}
 body {
-    margin: 0;
-    background-color: #d3d3d3;
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: Inter, Arial, sans-serif;
+  font-size: 14px;
+}
+button,
+input,
+select {
+  font: inherit;
+}
+button {
+  cursor: pointer;
+}
+.card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  box-shadow: 0 4px 18px #1d39550b;
+  min-width: 0;
+}
+.muted {
+  color: var(--muted);
+}
+.positive {
+  color: var(--green);
+}
+.negative {
+  color: var(--red);
+}
+.btn {
+  border: 0;
+  border-radius: 9px;
+  background: var(--green);
+  color: #fff;
+  padding: 11px 15px;
+  font-weight: 700;
+}
+.link {
+  border: 0;
+  background: none;
+  color: #2685dc;
+  font-size: 12px;
 }

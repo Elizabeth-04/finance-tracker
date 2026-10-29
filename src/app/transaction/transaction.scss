@@ -1,31 +1,74 @@
-h2 {
-    margin: 20px;
-    font-size: 30px;
+:host {
+  display: grid;
+  gap: 14px;
 }
-
-.table-container {
-    margin: 20px;
-    font-size: 20px;
+.toolbar {
+  padding: 15px;
+  display: flex;
+  align-items: end;
+  gap: 12px;
+  flex-wrap: wrap;
 }
-
+.toolbar label {
+  display: grid;
+  gap: 7px;
+  flex: 1;
+  min-width: 180px;
+  font-size: 11px;
+  color: #62758c;
+  font-weight: 650;
+}
+.toolbar input,
+.toolbar select {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 11px;
+  background: #fff;
+}
+.list-card {
+  overflow: hidden;
+}
+.list-head {
+  padding: 17px;
+  display: flex;
+  justify-content: space-between;
+}
+.muted {
+  font-size: 11px;
+  color: var(--muted);
+}
+.scroll {
+  overflow: auto;
+}
 table {
-    width: 100%;
-    background-color: white;
-    border-collapse: collapse;
-    border-radius: 20px;
-    box-shadow: 0 0 10px 5px #a0a0a0;
+  width: 100%;
+  border-collapse: collapse;
+  white-space: nowrap;
 }
-
-th, td {
-    padding: 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+th,
+td {
+  padding: 12px 15px;
+  border-top: 1px solid #edf1f5;
+  text-align: left;
+  font-size: 11px;
 }
-
-.income {
-    color: #008000;
+th {
+  color: #8292a8;
+  background: #fcfdfe;
 }
-
-.expense {
-    color: #ff0000;
+td {
+  color: #526780;
+}
+td:last-child,
+th:last-child {
+  text-align: right;
+}
+.empty {
+  text-align: center;
+  padding: 45px 20px;
+}
+.empty p {
+  color: var(--muted);
+  font-size: 12px;
 }

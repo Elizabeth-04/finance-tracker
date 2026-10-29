@@ -1,0 +1,91 @@
+:host {
+  display: block;
+}
+.form-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(220px, 0.8fr);
+  gap: 14px;
+  align-items: start;
+}
+.form-card {
+  padding: 23px;
+}
+.form-card h2 {
+  font-size: 19px;
+  margin: 0 0 6px;
+}
+.muted {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 0 0 20px;
+}
+.type-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.type-switch button,
+.secondary {
+  border: 1px solid var(--line);
+  background: #f7f9fb;
+  padding: 11px;
+  border-radius: 9px;
+  color: #667a91;
+}
+.type-switch button.active {
+  border-color: #a4dfc3;
+  background: var(--soft);
+  color: var(--dark);
+  font-weight: 700;
+}
+.form-card > label {
+  display: grid;
+  gap: 7px;
+  margin-bottom: 15px;
+  font-size: 12px;
+  color: #5c7088;
+  font-weight: 650;
+}
+.form-card input,
+.form-card select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #dfe7ee;
+  border-radius: 9px;
+  background: #fff;
+  color: var(--ink);
+}
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 9px;
+  margin-top: 20px;
+}
+.message {
+  padding: 10px;
+  background: var(--soft);
+  color: var(--dark);
+  font-size: 12px;
+  border-radius: 8px;
+}
+.side-note {
+  padding: 22px;
+  background: linear-gradient(145deg, #effaf4, #fff);
+}
+.side-note h3 {
+  margin-top: 0;
+}
+.side-note p {
+  font-size: 12px;
+  color: #71869a;
+  line-height: 1.7;
+}
+@media (max-width: 700px) {
+  .form-layout {
+    grid-template-columns: 1fr;
+  }
+  .form-card {
+    padding: 16px;
+  }
+}

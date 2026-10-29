@@ -1,21 +1,106 @@
-<div class="balance">
-    <h3>Общий баланс</h3>
-    <p class="total-balance">65000 &#8381;</p>
-
-    <div class="cards">
-        <div class="card">
-            <h3>Безналичные</h3>
-            <p>50000 &#8381;</p>
+<div class="dashboard">
+  <div class="stats">
+    <article class="card stat">
+      <div class="stat-head">Общий бюджет <span>&#9635;</span></div>
+      <strong>{{ money(120000) }}</strong>
+      <div class="progress"><span style="width: 72%"></span></div>
+      <small class="positive">Осталось 33 600 &#8381; &#183; 72% использовано</small>
+    </article>
+    <article class="card stat">
+      <div class="stat-head">Наличные <span>&#9673;</span></div>
+      <strong>{{ money(26300) }}</strong
+      ><small>22% от общего</small>
+    </article>
+    <article class="card stat">
+      <div class="stat-head">Безналичные <span>&#9648;</span></div>
+      <strong>{{ money(93700) }}</strong
+      ><small>78% от общего</small>
+    </article>
+    <article class="card stat">
+      <div class="stat-head">Доходы <span class="positive">&#8595;</span></div>
+      <strong>{{ money(86500) }}</strong
+      ><small class="positive">&#8593; 12% к прошлому месяцу</small>
+    </article>
+    <article class="card stat">
+      <div class="stat-head">Расходы <span class="negative">&#8593;</span></div>
+      <strong>{{ money(86400) }}</strong
+      ><small class="negative">&#8593; 5% к прошлому месяцу</small>
+    </article>
+  </div>
+  <div class="columns">
+    <article class="card chart-card">
+      <h2>Динамика расходов и доходов</h2>
+      <div class="legend"><span>&#9679; Доходы</span><span>&#9679; Расходы</span></div>
+      <div class="bars">
+        @for (
+          bar of [
+            { label: '1–6 окт', a: 78, b: 62 },
+            { label: '7–13 окт', a: 65, b: 49 },
+            { label: '14–20 окт', a: 86, b: 68 },
+            { label: '21–27 окт', a: 71, b: 59 },
+            { label: '28–30 окт', a: 83, b: 64 },
+          ];
+          track bar.label
+        ) {
+          <div class="bar-group">
+            <div class="bar-pair">
+              <i [style.height.%]="bar.a"></i><i [style.height.%]="bar.b"></i>
+            </div>
+            <small>{{ bar.label }}</small>
+          </div>
+        }
+      </div>
+    </article>
+    <article class="card category-card">
+      <h2>Структура расходов</h2>
+      <div class="donut">
+        <div><b>86 400 ₽</b><small>всего</small></div>
+      </div>
+      @for (category of categories; track category.name) {
+        <div class="category-row">
+          <i [style.background]="category.color"></i><span>{{ category.name }}</span
+          ><b>{{ money(category.amount) }}</b>
         </div>
-
-        <div class="card">
-            <h3>Наличные</h3>
-            <p>15000 &#8381;</p>
-        </div>
+      }
+    </article>
+  </div>
+  <article class="card table-card">
+    <div class="table-head">
+      <h2>Последние операции</h2>
+      <button class="link" (click)="openAll.emit()">Все операции &#8594;</button>
     </div>
-</div>
-
-<div class="expenses">
-    <h3>Траты за октябрь</h3>
-    <p class="expense">6000 &#8381;</p>
+    <div class="scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Дата</th>
+            <th>Категория</th>
+            <th>Описание</th>
+            <th>Метод</th>
+            <th>Сумма</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (transaction of transactions; track transaction.id) {
+            <tr>
+              <td>{{ transaction.date }}</td>
+              <td>{{ transaction.category }}</td>
+              <td>{{ transaction.description }}</td>
+              <td>{{ transaction.method }}</td>
+              <td [class.positive]="transaction.type === 'income'">
+                {{ transaction.type === 'income' ? '+' : '−' }} {{ money(transaction.amount) }}
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="5">Операций пока нет</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    <div class="table-actions">
+      <button class="btn" (click)="addNew.emit()">＋ Добавить операцию</button>
+    </div>
+  </article>
 </div>

@@ -1,5 +1,82 @@
-<app-header></app-header>
-
-<app-dashboard></app-dashboard>
-
-<app-transaction></app-transaction>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="logo">▣</span>
+      <div><b>FinTrack</b><small>Твои финансы под контролем</small></div>
+    </div>
+    <nav>
+      <button
+        [class.active]="page === 'home'"
+        [disabled]="page === 'home'"
+        (click)="navigate('home')"
+      >
+        &#8962; Главная</button
+      ><button
+        [class.active]="page === 'transactions'"
+        [disabled]="page === 'transactions'"
+        (click)="navigate('transactions')"
+      >
+        &#8644; Операции</button
+      ><button
+        [class.active]="page === 'analytics'"
+        [disabled]="page === 'analytics'"
+        (click)="navigate('analytics')"
+      >
+        &#9673; Аналитика</button
+      ><button
+        [class.active]="page === 'add'"
+        [disabled]="page === 'add'"
+        (click)="navigate('add')"
+      >
+        + Добавить операцию
+      </button>
+    </nav>
+  </aside>
+  <div class="main">
+    <app-header></app-header>
+    <main class="content">
+      <div class="heading">
+        <div>
+          <h1>
+            @switch (page) {
+              @case ('home') {
+                Финансовый обзор
+              }
+              @case ('transactions') {
+                Операции
+              }
+              @case ('add') {
+                Новая операция
+              }
+              @case ('analytics') {
+                Аналитика расходов
+              }
+            }
+          </h1>
+        </div>
+        <span class="month">&#9638; Октябрь 2026</span>
+      </div>
+      @switch (page) {
+        @case ('home') {
+          <app-dashboard
+            (openAll)="navigate('transactions')"
+            (addNew)="navigate('add')"
+          ></app-dashboard>
+        }
+        @case ('transactions') {
+          <app-transactions></app-transactions>
+        }
+        @case ('add') {
+          <app-add-transaction
+            (cancel)="navigate('home')"
+            (saved)="navigate('transactions')"
+          ></app-add-transaction>
+        }
+        @case ('analytics') {
+          <app-analytics></app-analytics>
+        }
+      }
+    </main>
+    <app-footer></app-footer>
+  </div>
+</div>

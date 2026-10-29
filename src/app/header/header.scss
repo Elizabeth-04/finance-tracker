@@ -1,19 +1,72 @@
-header {
-    background-color: #193552;
-    color: #ffffff;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+:host {
+  display: block;
 }
-
-h1 {
-    margin: 0;
+.topbar {
+  height: 70px;
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  padding: 0 25px;
+  gap: 14px;
 }
-
-a {
-    color: #ffffff;
-    text-decoration: none;
-    margin-left: 20px;
-    font-size: 20px;
+.search {
+  position: relative;
+  max-width: 440px;
+  width: 100%;
+}
+.search span {
+  position: absolute;
+  left: 13px;
+  top: 8px;
+  color: #8293a8;
+  font-size: 19px;
+}
+.search input {
+  width: 100%;
+  border: 1px solid transparent;
+  background: #f4f7fa;
+  padding: 11px 12px 11px 40px;
+  border-radius: 9px;
+}
+.search input:focus {
+  outline: 1px solid #a9dfc8;
+  background: #fff;
+}
+.focus {
+  border: 0;
+  background: none;
+  color: #2685dc;
+  font-size: 11px;
+}
+.profile {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+}
+.profile i {
+  font-style: normal;
+  border-radius: 50%;
+  background: #20394e;
+  color: white;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+}
+.profile > span {
+  font-size: 20px;
+  color: #60748d;
+}
+@media (max-width: 600px) {
+  .topbar {
+    padding: 0 12px;
+  }
+  .focus,
+  .profile b,
+  .profile > span {
+    display: none;
+  }
 }

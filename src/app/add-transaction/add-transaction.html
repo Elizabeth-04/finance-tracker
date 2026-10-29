@@ -1,0 +1,56 @@
+<div class="form-layout">
+  <form class="card form-card" (ngSubmit)="save()">
+    <h2>Детали операции</h2>
+    <p class="muted">Заполни поля для новой записи.</p>
+    <div class="type-switch">
+      <button type="button" [class.active]="type === 'expense'" (click)="type = 'expense'">
+        − Расход</button
+      ><button type="button" [class.active]="type === 'income'" (click)="type = 'income'">
+        ＋ Доход
+      </button>
+    </div>
+    <label
+      >Сумма, ₽<input
+        name="amount"
+        type="number"
+        min="1"
+        [(ngModel)]="amount"
+        required
+        placeholder="Например, 1250" /></label
+    ><label
+      >Категория<select name="category" [(ngModel)]="category">
+        <option>Продукты</option>
+        <option>Транспорт</option>
+        <option>Развлечения</option>
+        <option>Жильё и ЖКХ</option>
+        <option>Здоровье</option>
+        <option>Зарплата</option>
+        <option>Другое</option>
+      </select></label
+    ><label
+      >Описание<input
+        name="description"
+        [(ngModel)]="description"
+        placeholder="Например, супермаркет" /></label
+    ><label
+      >Способ оплаты<select name="method" [(ngModel)]="method">
+        <option>Карта</option>
+        <option>Наличные</option>
+      </select></label
+    ><label>Дата<input name="date" type="date" [(ngModel)]="date" required /></label>
+    @if (message) {
+      <p class="message" role="status">{{ message }}</p>
+    }
+    <div class="actions">
+      <button type="button" class="secondary">Отмена</button
+      ><button type="submit" class="btn">Сохранить операцию</button>
+    </div>
+  </form>
+  <aside class="card side-note">
+    <h3>Финансовая привычка</h3>
+    <p>
+      Записывай операции регулярно, чтобы понимать, куда уходят деньги и какие категории можно
+      оптимизировать.
+    </p>
+  </aside>
+</div>

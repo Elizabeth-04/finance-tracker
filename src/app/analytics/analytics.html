@@ -1,0 +1,32 @@
+<div class="analytics">
+  <article class="card summary">
+    <span>Расходы за месяц</span><strong>{{ money(total) }}</strong
+    ><b class="positive">&#8595; 12% к прошлому месяцу</b>
+  </article>
+  <article class="card summary">
+    <span>Самая крупная категория</span><strong>Продукты</strong
+    ><b>{{ money(28500) }} &#183; {{ percent(28500) }}%</b>
+  </article>
+  <article class="card breakdown">
+    <h2>Расходы по категориям</h2>
+    @let all = total;
+    @if (all > 0) {
+      @for (category of categories; track category.name) {
+        <div class="category">
+          <div>
+            <span>{{ category.name }}</span
+            ><b>{{ money(category.amount) }} &#183; {{ percent(category.amount) }}%</b>
+          </div>
+          <div class="progress">
+            <span
+              [style.width.%]="(category.amount / category.limit) * 100"
+              [style.background]="category.color"
+            ></span>
+          </div>
+        </div>
+      }
+    } @else {
+      <p class="muted">За этот месяц расходов пока нет.</p>
+    }
+  </article>
+</div>

@@ -1,30 +1,57 @@
-<h2>Недавние операции</h2>
-
-<div class="table-container">
-    <table>
-        <tr>
-            <th>Название</th>
-            <th>Сумма</th>
-        </tr>
-
-        <tr>
-            <td>Продукты</td>
-            <td class="expense">-3500 &#8381;</td>
-        </tr>
-
-        <tr>
-            <td>Одежда</td>
-            <td class="expense">-1500 &#8381;</td>
-        </tr>
-        
-        <tr>
-            <td>Зарплата</td>
-            <td class="income">+40000 &#8381;</td>
-        </tr>
-
-        <tr>
-            <td>Кафе</td>
-            <td class="expense">-1000 &#8381;</td>
-        </tr>
-    </table>
+<div class="toolbar card">
+  <label>Поиск<input [(ngModel)]="query" placeholder="Название или категория..." /></label
+  ><label
+    >Тип операции<select [(ngModel)]="kind">
+      <option value="all">Все операции</option>
+      <option value="expense">Расходы</option>
+      <option value="income">Доходы</option>
+    </select></label
+  >
+  <button class="btn" type="button">
+  ＋ Добавить
+  </button>
 </div>
+<article class="card list-card">
+  <div class="list-head">
+    <b>Все операции</b><span class="muted">Найдено: {{ filtered.length }}</span>
+  </div>
+  @let count = filtered.length;
+  @if (count > 0) {
+    <div class="scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>№</th>
+            <th>Дата</th>
+            <th>Категория</th>
+            <th>Описание</th>
+            <th>Способ оплаты</th>
+            <th>Сумма</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (transaction of filtered; track transaction.id; let i = $index) {
+            <tr>
+              <td>{{ i + 1 }}</td>
+              <td>{{ transaction.date }}</td>
+              <td>{{ transaction.category }}</td>
+              <td>{{ transaction.description }}</td>
+              <td>{{ transaction.method }}</td>
+              <td [class.positive]="transaction.type === 'income'">
+                {{ transaction.type === 'income' ? '+' : '−' }} {{ money(transaction.amount) }}
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="6">Операций пока нет.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  } @else {
+    <div class="empty">
+      <h3>Ничего не найдено</h3>
+    </div>
+  }
+</article>
