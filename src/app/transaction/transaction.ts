@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, computed, effect, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -10,9 +10,10 @@ import { FormsModule } from '@angular/forms';
 })
 
 export class Transaction {
-  protected query = '';
-  protected kind = 'all';
-  protected transactions = [
+  protected readonly query = signal('');
+  protected readonly kind = signal('all');
+
+  protected readonly transactions = signal([
     {
       id: 1,
       date: '30.04.2025',
@@ -58,15 +59,47 @@ export class Transaction {
       amount: 3200,
       type: 'expense',
     },
-  ];
-  protected get filtered() {
-    const q = this.query.trim().toLowerCase();
-    return this.transactions.filter(
+  ]);
+
+  protected readonly totalCount = computed(
+    () => this.transactions().length,
+  );
+
+  protected readonly expenseCount = computed(
+    () =>
+      this.transactions().filter(
+        (transaction) => transaction.type === 'expense',
+      ).length,
+  );
+
+  protected readonly filtered = computed(() => {
+    const q = this.query().trim().toLowerCase();
+    const selectedKind = this.kind();
+
+    return this.transactions().filter(
       (t) =>
-        (this.kind === 'all' || t.type === this.kind) &&
-        [t.category, t.description, t.method].join(' ').toLowerCase().includes(q),
+        (selectedKind === 'all' || t.type === selectedKind) &&
+        [t.category, t.description, t.method]
+          .join(' ')
+          .toLowerCase()
+          .includes(q),
+    );
+  });
+
+  constructor() {
+    effect(() => {
+      console.info(
+        `Количество операций: ${this.transactions().length}`,
+      );
+    });
+  }
+
+  protected removeTransaction(id: number): void {
+    this.transactions.update((items) =>
+      items.filter((transaction) => transaction.id !== id),
     );
   }
+
   protected money(n: number) {
     return new Intl.NumberFormat('ru-RU').format(n) + ' ₽';
   }

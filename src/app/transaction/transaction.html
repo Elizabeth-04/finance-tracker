@@ -1,7 +1,7 @@
 <div class="toolbar card">
-  <label>Поиск<input [(ngModel)]="query" placeholder="Название или категория..." /></label
+  <label>Поиск<input [ngModel]="query()" (ngModelChange)="query.set($event)" placeholder="Название или категория..." /></label
   ><label
-    >Тип операции<select [(ngModel)]="kind">
+    >Тип операции<select [ngModel]="kind()" (ngModelChange)="kind.set($event)">
       <option value="all">Все операции</option>
       <option value="expense">Расходы</option>
       <option value="income">Доходы</option>
@@ -13,9 +13,9 @@
 </div>
 <article class="card list-card">
   <div class="list-head">
-    <b>Все операции</b><span class="muted">Найдено: {{ filtered.length }}</span>
+    <b>Все операции</b><span class="muted">Найдено: {{ filtered().length }}</span>
   </div>
-  @let count = filtered.length;
+  @let count = filtered().length;
   @if (count > 0) {
     <div class="scroll">
       <table>
@@ -30,7 +30,7 @@
           </tr>
         </thead>
         <tbody>
-          @for (transaction of filtered; track transaction.id; let i = $index) {
+          @for (transaction of filtered(); track transaction.id; let i = $index) {
             <tr>
               <td>{{ i + 1 }}</td>
               <td>{{ transaction.date }}</td>

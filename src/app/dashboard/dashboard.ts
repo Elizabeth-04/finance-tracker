@@ -31,7 +31,7 @@ export class Dashboard {
       id: 2,
       date: '29 окт 2026',
       category: 'Транспорт',
-      description: 'Метро',
+      description: 'Автобус',
       method: 'Карта',
       amount: 120,
       type: 'expense',
