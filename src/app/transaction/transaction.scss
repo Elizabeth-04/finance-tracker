@@ -38,32 +38,21 @@
   font-size: 11px;
   color: var(--muted);
 }
-.scroll {
-  overflow: auto;
+.transaction-list {
+  display: grid;
+  gap: 12px;
+  padding: 0 15px 15px;
 }
-table {
-  width: 100%;
-  border-collapse: collapse;
-  white-space: nowrap;
+
+.projected-details {
+  display: grid;
+  gap: 5px;
 }
-th,
-td {
-  padding: 12px 15px;
-  border-top: 1px solid #edf1f5;
-  text-align: left;
-  font-size: 11px;
+
+.projected-details p {
+  margin: 0;
 }
-th {
-  color: #8292a8;
-  background: #fcfdfe;
-}
-td {
-  color: #526780;
-}
-td:last-child,
-th:last-child {
-  text-align: right;
-}
+
 .empty {
   text-align: center;
   padding: 45px 20px;

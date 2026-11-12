@@ -1,8 +1,9 @@
 import { Component, computed, effect, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TransactionCard } from './transaction-card/transaction-card';
 
 @Component({
-  imports: [FormsModule],
+  imports: [FormsModule, TransactionCard],
   standalone: true,
   selector: 'app-transactions',
   styleUrl: './transaction.scss',
@@ -61,6 +62,8 @@ export class Transaction {
     },
   ]);
 
+  protected readonly expandedIds = signal<{ [id: number]: boolean }>({});
+
   protected readonly totalCount = computed(
     () => this.transactions().length,
   );
@@ -100,7 +103,14 @@ export class Transaction {
     );
   }
 
+  protected changeExpanded(id: number, value: boolean): void {
+  this.expandedIds.update((items) => ({
+    ...items,
+    [id]: value,
+  }));
+}
+
   protected money(n: number) {
-    return new Intl.NumberFormat('ru-RU').format(n) + ' ₽';
+    return n + ' ₽';
   }
 }

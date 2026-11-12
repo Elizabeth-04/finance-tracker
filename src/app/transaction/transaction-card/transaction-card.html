@@ -1,0 +1,48 @@
+
+<article class="transaction-card">
+
+  <div class="card-header">
+
+    <div class="transaction-info">
+      <span class="category">
+        {{ transaction().category }}
+      </span>
+
+      <h3>
+        {{ transaction().description }}
+      </h3>
+
+      <span class="date">
+        {{ transaction().date }}
+      </span>
+    </div>
+
+    <div class="transaction-amount">
+      <strong
+        [class.positive]="transaction().type === 'income'"
+        [class.negative]="transaction().type === 'expense'"
+      >
+        {{ transaction().type === 'income' ? '+' : '−' }}
+        {{ transaction().amount.toLocaleString('ru-RU') }} ₽
+      </strong>
+      <span>{{ transaction().method }}</span>
+    </div>
+  </div>
+
+  <div class="card-actions">
+    <button
+      type="button"
+      class="details-btn"
+      (click)="toggleDetails()">
+      {{ expanded() ? 'Скрыть подробности' : 'Подробнее' }}
+    </button>
+
+    <button type="button" class="delete-btn" (click)="removeTransaction()">
+      Удалить
+    </button>
+  </div>
+
+  <div class="transaction-details" [hidden]="!expanded()">
+    <ng-content />
+  </div>
+</article>

@@ -1,57 +1,68 @@
 <div class="toolbar card">
-  <label>Поиск<input [ngModel]="query()" (ngModelChange)="query.set($event)" placeholder="Название или категория..." /></label
-  ><label
-    >Тип операции<select [ngModel]="kind()" (ngModelChange)="kind.set($event)">
+  <label>Поиск<input
+      [ngModel]="query()"
+      (ngModelChange)="query.set($event)"
+      placeholder="Название или категория..." />
+  </label>
+      
+  <label>Тип операции
+    <select [ngModel]="kind()" (ngModelChange)="kind.set($event)">
       <option value="all">Все операции</option>
       <option value="expense">Расходы</option>
       <option value="income">Доходы</option>
-    </select></label
-  >
-  <button class="btn" type="button">
-  ＋ Добавить
-  </button>
+    </select>
+  </label>
+  <button class="btn" type="button">＋ Добавить</button>
 </div>
+
 <article class="card list-card">
   <div class="list-head">
-    <b>Все операции</b><span class="muted">Найдено: {{ filtered().length }}</span>
+    <b>Все операции</b>
+    <span class="muted">Найдено: {{ filtered().length }}</span>
   </div>
-  @let count = filtered().length;
-  @if (count > 0) {
-    <div class="scroll">
-      <table>
-        <thead>
-          <tr>
-            <th>№</th>
-            <th>Дата</th>
-            <th>Категория</th>
-            <th>Описание</th>
-            <th>Способ оплаты</th>
-            <th>Сумма</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (transaction of filtered(); track transaction.id; let i = $index) {
-            <tr>
-              <td>{{ i + 1 }}</td>
-              <td>{{ transaction.date }}</td>
-              <td>{{ transaction.category }}</td>
-              <td>{{ transaction.description }}</td>
-              <td>{{ transaction.method }}</td>
-              <td [class.positive]="transaction.type === 'income'">
-                {{ transaction.type === 'income' ? '+' : '−' }} {{ money(transaction.amount) }}
-              </td>
-            </tr>
-          } @empty {
-            <tr>
-              <td colspan="6">Операций пока нет.</td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
-  } @else {
-    <div class="empty">
-      <h3>Ничего не найдено</h3>
-    </div>
-  }
+
+  <div class="transaction-list">
+
+    @for (transaction of filtered(); track transaction.id) {
+
+      <app-transaction-card
+        [transaction]="transaction"
+        [expanded]="expandedIds()[transaction.id] ?? false"
+        (expandedChange)="changeExpanded(transaction.id, $event)"
+        (remove)="removeTransaction($event)"
+      >
+        <div class="projected-details">
+
+          <p>
+            <b>Категория:</b>
+            {{ transaction.category }}
+          </p>
+
+          <p>
+            <b>Описание:</b>
+            {{ transaction.description }}
+          </p>
+
+          <p>
+            <b>Способ оплаты:</b>
+            {{ transaction.method }}
+          </p>
+
+          <p>
+            <b>Тип операции:</b>
+            {{
+              transaction.type === 'income'
+                ? 'Доход'
+                : 'Расход'
+            }}
+          </p>
+        </div>
+      </app-transaction-card>
+    } @empty {
+      <div class="empty">
+        <h3>Ничего не найдено</h3>
+        <p>Попробуй изменить параметры поиска.</p>
+      </div>
+    }
+  </div>
 </article>

@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   imports: [],
@@ -8,8 +8,6 @@ import { Component, EventEmitter, Output } from '@angular/core';
   templateUrl: './dashboard.html',
 })
 export class Dashboard {
-  @Output() openAll = new EventEmitter<void>();
-  @Output() addNew = new EventEmitter<void>();
   protected categories = [
     { name: 'Продукты', amount: 28500, color: '#208c67' },
     { name: 'Транспорт', amount: 12600, color: '#43a8f2' },
@@ -56,7 +54,7 @@ export class Dashboard {
     },
   ];
   protected money(n: number) {
-    return new Intl.NumberFormat('ru-RU').format(n) + ' ₽';
+    return n + ' ₽';
   }
 }
 
