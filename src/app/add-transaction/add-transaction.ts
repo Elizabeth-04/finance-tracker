@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TransactionService } from '../services/transaction.service';
 
 @Component({
   imports: [FormsModule],
@@ -9,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 })
 
 export class AddTransaction {
+  private readonly transactionService = inject(TransactionService);
   protected type = 'expense';
   protected amount: number | null = null;
   protected category = 'Продукты';
@@ -16,12 +18,32 @@ export class AddTransaction {
   protected method = 'Карта';
   protected date = '2026-10-20';
   protected message = '';
+  
+
   protected save() {
-    if (!this.amount || this.amount < 1 || !this.date) {
-      this.message = 'Укажи сумму больше нуля и дату.';
-      return;
-    }
-    this.message = `Демо: операция на ${new Intl.NumberFormat('ru-RU').format(this.amount)} ₽ проверена.`;
+  if (!this.amount || this.amount < 1 || !this.date) {
+    this.message = 'Укажи сумму больше нуля и дату.';
+    return;
   }
+
+  const added = this.transactionService.addTransaction({
+    date: this.date,
+    category: this.category,
+    description: this.description,
+    method: this.method,
+    amount: this.amount,
+    type: this.type,
+  });
+
+  if (!added) {
+    this.message = 'Проверь заполнение полей.';
+    return;
+  }
+
+  this.message = 'Операция успешно добавлена.';
+
+  this.amount = null;
+  this.description = '';
+}
 }
 

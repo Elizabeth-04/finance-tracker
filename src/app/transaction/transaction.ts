@@ -1,6 +1,7 @@
-import { Component, computed, effect, signal } from '@angular/core';
+import { Component, computed, effect, signal, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TransactionCard } from './transaction-card/transaction-card';
+import { TransactionService } from '../services/transaction.service';
 
 @Component({
   imports: [FormsModule, TransactionCard],
@@ -13,55 +14,8 @@ import { TransactionCard } from './transaction-card/transaction-card';
 export class Transaction {
   protected readonly query = signal('');
   protected readonly kind = signal('all');
-
-  protected readonly transactions = signal([
-    {
-      id: 1,
-      date: '30.04.2025',
-      category: 'Продукты',
-      description: 'Пятёрочка',
-      method: 'Карта',
-      amount: 2480,
-      type: 'expense',
-    },
-    {
-      id: 2,
-      date: '29.04.2025',
-      category: 'Транспорт',
-      description: 'Автобус',
-      method: 'Карта',
-      amount: 120,
-      type: 'expense',
-    },
-    {
-      id: 3,
-      date: '28.04.2025',
-      category: 'Развлечения',
-      description: 'Кино',
-      method: 'Карта',
-      amount: 850,
-      type: 'expense',
-    },
-    {
-      id: 4,
-      date: '27.04.2025',
-      category: 'Зарплата',
-      description: 'ООО Ромашка',
-      method: 'Карта',
-      amount: 86500,
-      type: 'income',
-    },
-    {
-      id: 5,
-      date: '26.04.2025',
-      category: 'Жильё и ЖКХ',
-      description: 'Квартплата',
-      method: 'Карта',
-      amount: 3200,
-      type: 'expense',
-    },
-  ]);
-
+  private readonly transactionService = inject(TransactionService);
+  protected readonly transactions = this.transactionService.transactions;
   protected readonly expandedIds = signal<{ [id: number]: boolean }>({});
 
   protected readonly totalCount = computed(
@@ -98,9 +52,7 @@ export class Transaction {
   }
 
   protected removeTransaction(id: number): void {
-    this.transactions.update((items) =>
-      items.filter((transaction) => transaction.id !== id),
-    );
+    this.transactionService.removeTransaction(id);
   }
 
   protected changeExpanded(id: number, value: boolean): void {
